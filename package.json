@@ -1,26 +1,31 @@
 {
-	"name": "html-lens",
-	"displayName": "HTML Lens",
-	"description": "HTML Language Code Lens",
+	"name": "html-end-tag-labels",
+	"displayName": "HTML End Tag Labels",
+	"description": "Labels HTML end tags in VSCode",
 	"version": "0.0.1",
+	"author": {
+		"email": "anteprimorachr@gmail.com",
+		"name": "Ante Primorac",
+		"url": "http://anteprimorac.com.hr"
+	},
+	"publisher": "anteprimorac",
+	"license": "MIT",
 	"engines": {
 		"vscode": "^1.39.0"
 	},
 	"categories": [
 		"Other"
 	],
+	"keywords": [
+		"html",
+		"end tag",
+		"label"
+	],
+	"icon": "images/icon.png",
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onLanguage:html"
 	],
 	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
-			}
-		]
-	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
@@ -30,13 +35,16 @@
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
-		"@types/mocha": "^5.2.6",
-		"@types/node": "^10.12.21",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^10.17.0",
 		"@types/vscode": "^1.39.0",
-		"glob": "^7.1.4",
-		"mocha": "^6.1.4",
-		"typescript": "^3.3.1",
-		"tslint": "^5.12.1",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"typescript": "^3.6.4",
+		"tslint": "^5.20.0",
 		"vscode-test": "^1.2.0"
+	},
+	"dependencies": {
+		"vscode-html-languageservice": "^3.0.3"
 	}
 }
