@@ -25,6 +25,10 @@
 	"activationEvents": [
 		"onLanguage:html"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/anteprimorac/vscode-html-end-tag-labels.git"
+	},
 	"main": "./out/extension.js",
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
