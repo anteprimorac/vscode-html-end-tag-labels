@@ -100,7 +100,7 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 				const endTagLength = tagName.length + 3; // 3 chars for `</>`
 				const endTagLine = symbol.location.range.end.line;
 				const endTagEndChar = symbol.location.range.end.character;
-				const endTagStartChar = endTagEndChar - endTagLength;
+				const endTagStartChar = endTagEndChar >= endTagLength ? endTagEndChar - endTagLength : endTagEndChar;
 
 				const decoration: vscode.DecorationOptions = {
 					range: new vscode.Range(
