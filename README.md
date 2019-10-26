@@ -10,6 +10,10 @@ Labels HTML end tags in VSCode.
 
 ## Release Notes
 
+### 0.1.2
+
+Improved labeling of multiple classes and empty attributes.
+
 ### 0.1.1
 
 Fixed README.md image syntax.
