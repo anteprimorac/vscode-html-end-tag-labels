@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { getLanguageService, LanguageService, SymbolKind } from 'vscode-html-languageservice';
 
+type HTMLEndTagDecoration = vscode.DecorationOptions & {renderOptions: {after: {contentText: string}}};
+
 export default class ClosingLabelsDecorations implements vscode.Disposable {
 	private activeEditor?: vscode.TextEditor;
 	private subscriptions: vscode.Disposable[] = [];
@@ -65,7 +67,7 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 
 		const symbols = this.languageService.findDocumentSymbols(document, this.languageService.parseHTMLDocument(document));
 
-		const decorations = symbols
+		const decorations: HTMLEndTagDecoration[] = symbols
 			.filter((symbol) => {
 				// field symbol
 				return symbol.kind === SymbolKind.Field &&
@@ -81,37 +83,64 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 					(symbol.name.indexOf('#') !== -1 || symbol.name.indexOf('.') !== -1);
 			})
 			.map((symbol) => {
-				let label;
-				let tagName;
+				const hashCharIndex = symbol.name.indexOf('#');
+				const dotCharIndex = symbol.name.indexOf('.');
 
-				if (symbol.name.indexOf('#') !== -1) {
-					const parts = symbol.name.split('#', 2);
-					tagName = parts[0];
-					label = '#' + parts[1];
-				} else if (symbol.name.indexOf('.') !== -1) {
-					const parts = symbol.name.split('.', 2);
-					tagName = parts[0];
-					label = '.' + parts[1];
-				} else {
-					tagName = symbol.name;
-					label = symbol.name;
+				const hasIdAttr = hashCharIndex !== -1;
+				const hasClassAttr = dotCharIndex !== -1;
+
+				const separatorCharIndex = hasIdAttr ? hashCharIndex : dotCharIndex;
+
+				const tagName = symbol.name.substring(0, separatorCharIndex);
+				let id: string = '';
+				let classes: string = '';
+
+				if (hasIdAttr) {
+					let idAttr: string;
+
+					if (hasClassAttr) {
+						idAttr = symbol.name.substring(hashCharIndex + 1, dotCharIndex);
+					} else {
+						idAttr = symbol.name.substring(hashCharIndex + 1);
+					}
+
+					idAttr = idAttr.trim();
+
+					if (idAttr.length) {
+						id = `#${idAttr}`;
+					}
 				}
+
+				if (hasClassAttr) {
+					const classAttr = symbol.name.substring(dotCharIndex + 1)
+						.trim()
+						.split('.')
+						.map((item) => item.trim())
+						.filter((item) => Boolean(item.length))
+						.join('.');
+
+					if (classAttr.length) {
+						classes = `.${classAttr}`;
+					}
+				}
+
+				const label = `${id}${classes}`;
 
 				const endTagLength = tagName.length + 3; // 3 chars for `</>`
 				const endTagLine = symbol.location.range.end.line;
 				const endTagEndChar = symbol.location.range.end.character;
 				const endTagStartChar = endTagEndChar >= endTagLength ? endTagEndChar - endTagLength : endTagEndChar;
 
-				const decoration: vscode.DecorationOptions = {
+				return {
 					range: new vscode.Range(
 						new vscode.Position(endTagLine, endTagStartChar),
 						new vscode.Position(endTagLine, endTagEndChar)
 					),
 					renderOptions: { after: { contentText: `/${label}` } },
 				};
-
-				return decoration;
-			});
+			})
+			// Filter out decorations with empty label.
+			.filter((item) => item.renderOptions.after.contentText.length > 1);
 
 		activeEditor.setDecorations(this.decorationType, decorations);
 	}
