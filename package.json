@@ -23,7 +23,9 @@
 	],
 	"icon": "images/icon.png",
 	"activationEvents": [
-		"onLanguage:html"
+		"onLanguage:html",
+		"onLanguage:blade",
+		"onLanguage:vue-html"
 	],
 	"repository": {
 		"type": "git",
