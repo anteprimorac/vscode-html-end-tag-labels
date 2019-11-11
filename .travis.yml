@@ -1,0 +1,17 @@
+language: node_js
+sudo: false
+node_js:
+  - "node"
+services:
+  - xvfb
+addons:
+  apt:
+    packages:
+      - libsecret-1-dev
+before_install:
+  - export DISPLAY=:99.0
+install:
+  - npm install
+  - npm run vscode:prepublish
+script:
+  - npm test
