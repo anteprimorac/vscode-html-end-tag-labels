@@ -10,6 +10,10 @@ Labels HTML end tags in VSCode.
 
 ## Release Notes
 
+### 0.2.0
+
+Basic support for Blade and Vue.js HTML templates
+
 ### 0.1.2
 
 Improved labeling of multiple classes and empty attributes.
