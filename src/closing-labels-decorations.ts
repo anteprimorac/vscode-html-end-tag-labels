@@ -56,16 +56,16 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 		this.updateTimeout = setTimeout(this.update, 500);
 	}
 
-	update() {
-		if (!this.languageService || !this.activeEditor) {
-			return;
+	getDocumentDecorations(input: vscode.TextDocument) {
+		if (!this.languageService) {
+			return [];
 		}
 
-		const activeEditor = this.activeEditor;
-
-		const document = {...activeEditor.document, uri: activeEditor.document.uri.toString()};
-
-		const symbols = this.languageService.findDocumentSymbols(document, this.languageService.parseHTMLDocument(document));
+		const document = {...input, uri: input.uri.toString()};
+		const symbols = this.languageService.findDocumentSymbols(
+			document,
+			this.languageService.parseHTMLDocument(document)
+		);
 
 		const decorations: HTMLEndTagDecoration[] = symbols
 			.filter((symbol) => {
@@ -142,7 +142,18 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 			// Filter out decorations with empty label.
 			.filter((item) => item.renderOptions.after.contentText.length > 1);
 
-		activeEditor.setDecorations(this.decorationType, decorations);
+		return decorations;
+	}
+
+	update() {
+		if (!this.languageService || !this.activeEditor) {
+			return;
+		}
+
+		this.activeEditor.setDecorations(
+			this.decorationType,
+			this.getDocumentDecorations(this.activeEditor.document)
+		);
 	}
 
 	public dispose() {
