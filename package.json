@@ -48,7 +48,7 @@
 		"mocha": "^6.2.2",
 		"typescript": "^3.6.4",
 		"tslint": "^5.20.1",
-		"vscode-test": "^1.2.0"
+		"vscode-test": "^1.2.3"
 	},
 	"dependencies": {
 		"vscode-html-languageservice": "^3.0.3"
