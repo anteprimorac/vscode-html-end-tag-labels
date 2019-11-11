@@ -1,8 +1,10 @@
+.github/**
 .vscode/**
 .vscode-test/**
 out/test/**
 src/**
 .gitignore
+.travis.yml
 vsc-extension-quickstart.md
 **/tsconfig.json
 **/tslint.json
