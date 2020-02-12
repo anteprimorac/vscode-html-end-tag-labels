@@ -23,6 +23,15 @@
         "maintenance",
         "review"
       ]
+    },
+    {
+      "login": "ctf0",
+      "name": "Muah",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7388088?v=4",
+      "profile": "http://ctf0.wordpress.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
