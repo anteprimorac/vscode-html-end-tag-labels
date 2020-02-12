@@ -1,0 +1,29 @@
+{
+  "projectName": "vscode-html-end-tag-labels",
+  "projectOwner": "anteprimorac",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "anteprimorac",
+      "name": "Ante Primorac",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/972083?v=4",
+      "profile": "http://anteprimorac.com.hr",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas",
+        "infra",
+        "maintenance",
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
