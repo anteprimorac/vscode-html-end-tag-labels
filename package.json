@@ -44,10 +44,11 @@
 		"@types/mocha": "^7.0.1",
 		"@types/node": "^13.7.1",
 		"@types/vscode": "^1.42.0",
+		"all-contributors-cli": "^6.13.0",
 		"glob": "^7.1.6",
 		"mocha": "^7.0.1",
-		"typescript": "^3.7.5",
 		"tslint": "^6.0.0",
+		"typescript": "^3.7.5",
 		"vscode-test": "^1.3.0"
 	},
 	"dependencies": {
