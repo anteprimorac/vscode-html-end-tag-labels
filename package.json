@@ -38,7 +38,7 @@
 		    "properties": {
 			"htmlEndTagLabels.labelColor": {
 			    "type": "string",
-			    "default": "#ffffff",
+			    "default": "",
 			    "description": "label forground color (if empty will use 'editorCodeLens.foreground' instead)"
 			}
 		    }
