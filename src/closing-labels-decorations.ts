@@ -9,13 +9,7 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 	private languageService?: LanguageService;
 	private updateTimeout?: NodeJS.Timeout;
 
-	private readonly decorationType = vscode.window.createTextEditorDecorationType({
-		after: {
-			color: new vscode.ThemeColor('editorCodeLens.foreground'),
-			margin: '2px',
-		},
-		rangeBehavior: vscode.DecorationRangeBehavior.ClosedOpen,
-	});
+    private readonly decorationType = this.createTextEditorDecoration()
 
 	constructor() {
 		this.update = this.update.bind(this);
@@ -36,6 +30,18 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 			this.setActiveEditor(vscode.window.activeTextEditor);
 		}
 	}
+	
+	createTextEditorDecoration() {
+        let color = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor
+
+        return vscode.window.createTextEditorDecorationType({
+            after: {
+                color: color || new vscode.ThemeColor('editorCodeLens.foreground'),
+                margin: '2px',
+            },
+            rangeBehavior: vscode.DecorationRangeBehavior.ClosedOpen,
+        });
+    }
 
 	setActiveEditor(editor: vscode.TextEditor|undefined) {
 		if (editor) {
