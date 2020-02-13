@@ -9,11 +9,23 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 	private languageService?: LanguageService;
 	private updateTimeout?: NodeJS.Timeout;
 
-    private readonly decorationType = this.createTextEditorDecoration()
+	private decorationType = this.createTextEditorDecoration();
 
 	constructor() {
 		this.update = this.update.bind(this);
 		this.languageService = getLanguageService();
+
+		this.subscriptions.push(vscode.workspace.onDidChangeConfiguration((event) => {
+			if (!event.affectsConfiguration('htmlEndTagLabels')) {
+				return;
+			}
+
+			this.decorationType = this.createTextEditorDecoration();
+
+			if (this.activeEditor && event.affectsConfiguration('htmlEndTagLabels', this.activeEditor.document)) {
+				this.triggerUpdate();
+			}
+		}));
 
 		// Listen to active editor change
 		this.subscriptions.push(vscode.window.onDidChangeActiveTextEditor((event) => this.setActiveEditor(event)));
@@ -30,18 +42,18 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 			this.setActiveEditor(vscode.window.activeTextEditor);
 		}
 	}
-	
-	createTextEditorDecoration() {
-        let color = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor
 
-        return vscode.window.createTextEditorDecorationType({
-            after: {
-                color: color || new vscode.ThemeColor('editorCodeLens.foreground'),
-                margin: '2px',
-            },
-            rangeBehavior: vscode.DecorationRangeBehavior.ClosedOpen,
-        });
-    }
+	createTextEditorDecoration() {
+		let color = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor;
+
+		return vscode.window.createTextEditorDecorationType({
+			after: {
+				color: color || new vscode.ThemeColor('editorCodeLens.foreground'),
+				margin: '2px',
+			},
+			rangeBehavior: vscode.DecorationRangeBehavior.ClosedOpen,
+		});
+	}
 
 	setActiveEditor(editor: vscode.TextEditor|undefined) {
 		if (editor) {

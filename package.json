@@ -32,16 +32,17 @@
 		"url": "https://github.com/anteprimorac/vscode-html-end-tag-labels.git"
 	},
 	"main": "./out/extension.js",
-    "contributes": {
+	"contributes": {
 		"configuration": {
-		    "title": "Html End Tag Labels",
-		    "properties": {
-			"htmlEndTagLabels.labelColor": {
-			    "type": "string",
-			    "default": "",
-			    "description": "label forground color (if empty will use 'editorCodeLens.foreground' instead)"
+			"title": "Html End Tag Labels",
+			"properties": {
+				"htmlEndTagLabels.labelColor": {
+					"type": "string",
+					"default": "",
+					"pattern": "(^$)|(^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)",
+					"markdownDescription": "Label foreground color (if empty will use `editorCodeLens.foreground` instead)."
+				}
 			}
-		    }
 		}
 	},
 	"scripts": {
