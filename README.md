@@ -8,6 +8,12 @@ Labels HTML end tags in VSCode.
 
 ![HTML End Tag Labels](images/screenshot-1.png)
 
+## Settings
+
+| Name                        | Description                                                                     |
+|-----------------------------|---------------------------------------------------------------------------------|
+| htmlEndTagLabels.labelColor | Label foreground color (if empty will use `editorCodeLens.foreground` instead). |
+
 ## Release Notes
 
 ### 0.2.0
