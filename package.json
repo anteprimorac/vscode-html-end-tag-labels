@@ -56,7 +56,7 @@
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.7.1",
-		"@types/vscode": "^1.42.0",
+		"@types/vscode": "^1.43.0",
 		"all-contributors-cli": "^6.14.0",
 		"glob": "^7.1.6",
 		"mocha": "^7.1.0",
