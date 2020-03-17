@@ -25,6 +25,7 @@
 	"activationEvents": [
 		"onLanguage:html",
 		"onLanguage:php",
+		"onLanguage:twig",
 		"onLanguage:blade",
 		"onLanguage:vue-html"
 	],
