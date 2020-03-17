@@ -2,7 +2,7 @@
 	"name": "html-end-tag-labels",
 	"displayName": "HTML End Tag Labels",
 	"description": "Labels HTML end tags in VSCode",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"author": {
 		"email": "anteprimorachr@gmail.com",
 		"name": "Ante Primorac",
@@ -24,6 +24,7 @@
 	"icon": "images/icon.png",
 	"activationEvents": [
 		"onLanguage:html",
+		"onLanguage:php",
 		"onLanguage:blade",
 		"onLanguage:vue-html"
 	],
