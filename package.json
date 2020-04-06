@@ -24,6 +24,8 @@
 	"icon": "images/icon.png",
 	"activationEvents": [
 		"onLanguage:html",
+		"onLanguage:php",
+		"onLanguage:twig",
 		"onLanguage:blade",
 		"onLanguage:vue-html"
 	],
