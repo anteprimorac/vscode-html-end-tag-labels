@@ -32,7 +32,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Elvanos",
+      "name": "Elvanos Takashi",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16904898?v=4",
+      "profile": "https://github.com/Elvanos",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
