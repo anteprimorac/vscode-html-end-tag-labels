@@ -10,10 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/stale@v1
+    - uses: actions/stale@v3
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: 'Tagging this issue as Stale.'
         stale-pr-message: 'Tagging this pull request as Stale.'
         stale-issue-label: 'no-issue-activity'
+        exempt-issue-labels: 'awaiting-approval,work-in-progress'
         stale-pr-label: 'no-pr-activity'
+        exempt-pr-labels: 'awaiting-approval,work-in-progress'
