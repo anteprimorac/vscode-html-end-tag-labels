@@ -61,7 +61,7 @@
 		"@types/vscode": "~1.42.0",
 		"all-contributors-cli": "^6.19.0",
 		"glob": "^7.1.6",
-		"mocha": "^7.2.0",
+		"mocha": "^8.2.1",
 		"tslint": "^6.1.3",
 		"typescript": "^4.0.5",
 		"vscode-test": "^1.4.1"
