@@ -38,28 +38,28 @@ suite('Extension Test Suite', () => {
 
 		const labels = new ClosingLabelsDecorations();
 
-		assert.deepEqual(
+		assert.deepStrictEqual(
 			labels.getDocumentDecorations(document),
 			[
 				{
-					range: {
-						_end: { _character: 8, _line: 6 },
-						_start: { _character: 2, _line: 6 },
-					},
+					range: new vscode.Range(
+						new vscode.Position(6, 2),
+						new vscode.Position(6, 8),
+					),
 					renderOptions: { after: { contentText: '/#test-id' } },
 				},
 				{
-					range: {
-						_end: { _character: 8, _line: 8 },
-						_start: { _character: 2, _line: 8 },
-					},
+					range: new vscode.Range(
+						new vscode.Position(8, 2),
+						new vscode.Position(8, 8),
+					),
 					renderOptions: { after: { contentText: '/.test-class' } },
 				},
 				{
-					range: {
-						_end: { _character: 8, _line: 10 },
-						_start: { _character: 2, _line: 10 },
-					},
+					range: new vscode.Range(
+						new vscode.Position(10, 2),
+						new vscode.Position(10, 8),
+					),
 					renderOptions: { after: { contentText: '/#test-both-id.test-both-class' } },
 				},
 			],
