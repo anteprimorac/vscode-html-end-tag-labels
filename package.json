@@ -27,7 +27,8 @@
 		"onLanguage:php",
 		"onLanguage:twig",
 		"onLanguage:blade",
-		"onLanguage:vue-html"
+		"onLanguage:vue-html",
+		"onLanguage:svelte"
 	],
 	"repository": {
 		"type": "git",
