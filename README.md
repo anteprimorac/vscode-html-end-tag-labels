@@ -39,7 +39,7 @@ Initial release.
 ## Contributors ✨
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -52,6 +52,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://anteprimorac.com.hr"><img src="https://avatars0.githubusercontent.com/u/972083?v=4" width="100px;" alt=""/><br /><sub><b>Ante Primorac</b></sub></a><br /><a href="https://github.com/anteprimorac/vscode-html-end-tag-labels/commits?author=anteprimorac" title="Code">💻</a> <a href="https://github.com/anteprimorac/vscode-html-end-tag-labels/commits?author=anteprimorac" title="Documentation">📖</a> <a href="#ideas-anteprimorac" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-anteprimorac" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-anteprimorac" title="Maintenance">🚧</a> <a href="https://github.com/anteprimorac/vscode-html-end-tag-labels/pulls?q=is%3Apr+reviewed-by%3Aanteprimorac" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="http://ctf0.wordpress.com/"><img src="https://avatars2.githubusercontent.com/u/7388088?v=4" width="100px;" alt=""/><br /><sub><b>Muah</b></sub></a><br /><a href="https://github.com/anteprimorac/vscode-html-end-tag-labels/commits?author=ctf0" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Elvanos"><img src="https://avatars2.githubusercontent.com/u/16904898?v=4" width="100px;" alt=""/><br /><sub><b>Elvanos Takashi</b></sub></a><br /><a href="https://github.com/anteprimorac/vscode-html-end-tag-labels/commits?author=Elvanos" title="Code">💻</a></td>
+    <td align="center"><a href="https://imfeld.dev"><img src="https://avatars0.githubusercontent.com/u/1369558?v=4" width="100px;" alt=""/><br /><sub><b>Daniel Imfeld</b></sub></a><br /><a href="https://github.com/anteprimorac/vscode-html-end-tag-labels/commits?author=dimfeld" title="Code">💻</a></td>
   </tr>
 </table>
 
