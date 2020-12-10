@@ -16,6 +16,10 @@ Labels HTML end tags in VSCode.
 
 ## Release Notes
 
+### 0.4.0
+
+Basic support for PHP and twig files.
+
 ### 0.3.0
 
 Label foreground color configuration.
