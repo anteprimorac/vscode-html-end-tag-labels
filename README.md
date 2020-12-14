@@ -1,6 +1,10 @@
 # HTML End Tag Labels
 
-[![VS Marketplace Version](https://badgen.net/vs-marketplace/v/anteprimorac.html-end-tag-labels)](https://marketplace.visualstudio.com/items?itemName=anteprimorac.html-end-tag-labels) [![VS Marketplace Installs](https://badgen.net/vs-marketplace/i/anteprimorac.html-end-tag-labels)](https://marketplace.visualstudio.com/items?itemName=anteprimorac.html-end-tag-labels) ![Test](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Test/badge.svg) ![Deploy Extension](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Deploy%20Extension/badge.svg)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/anteprimorac.html-end-tag-labels?label=vs%20marketplace)](https://marketplace.visualstudio.com/items?itemName=anteprimorac.html-end-tag-labels) [![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/anteprimorac.html-end-tag-labels?label=vs%20marketplace%20installs)](https://marketplace.visualstudio.com/items?itemName=anteprimorac.html-end-tag-labels) [![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/anteprimorac.html-end-tag-labels?label=vs%20marketplace%20downloads)](https://marketplace.visualstudio.com/items?itemName=anteprimorac.html-end-tag-labels)
+
+[![Open VSX Version](https://img.shields.io/open-vsx/v/anteprimorac/html-end-tag-labels)](https://open-vsx.org/extension/anteprimorac/html-end-tag-labels) [![Open VSX Downloads](https://img.shields.io/open-vsx/dt/anteprimorac/html-end-tag-labels?label=open%20vsx%20downloads)](https://open-vsx.org/extension/anteprimorac/html-end-tag-labels)
+
+[![Test](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Test/badge.svg)](https://github.com/anteprimorac/vscode-html-end-tag-labels/actions?query=workflow%3ATest) [![Deploy Extension](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Deploy%20Extension/badge.svg)](https://github.com/anteprimorac/vscode-html-end-tag-labels/actions?query=workflow%3A%22Deploy+Extension%22)
 
 Labels HTML end tags in VSCode.
 
