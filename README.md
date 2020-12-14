@@ -16,6 +16,10 @@ Labels HTML end tags in VSCode.
 
 ## Release Notes
 
+### 0.6.0
+
+Publish extension to Open VSX Registry.
+
 ### 0.5.0
 
 Basic support for Svelte files.
