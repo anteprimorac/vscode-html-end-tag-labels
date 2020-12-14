@@ -1,6 +1,6 @@
 # HTML End Tag Labels
 
-![VS Marketplace Version](https://badgen.net/vs-marketplace/v/anteprimorac.html-end-tag-labels) ![VS Marketplace Installs](https://badgen.net/vs-marketplace/i/anteprimorac.html-end-tag-labels) [![Build Status](https://travis-ci.com/anteprimorac/vscode-html-end-tag-labels.svg?branch=master)](https://travis-ci.com/anteprimorac/vscode-html-end-tag-labels)
+[![VS Marketplace Version](https://badgen.net/vs-marketplace/v/anteprimorac.html-end-tag-labels)](https://marketplace.visualstudio.com/items?itemName=anteprimorac.html-end-tag-labels) [![VS Marketplace Installs](https://badgen.net/vs-marketplace/i/anteprimorac.html-end-tag-labels)](https://marketplace.visualstudio.com/items?itemName=anteprimorac.html-end-tag-labels) ![Test](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Test/badge.svg) ![Deploy Extension](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Deploy%20Extension/badge.svg)
 
 Labels HTML end tags in VSCode.
 
