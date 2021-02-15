@@ -60,7 +60,7 @@
 		"@types/mocha": "^8.0.3",
 		"@types/node": "^12.19.15",
 		"@types/vscode": "~1.42.0",
-		"all-contributors-cli": "^6.19.0",
+		"all-contributors-cli": "^6.20.0",
 		"glob": "^7.1.6",
 		"mocha": "^8.2.1",
 		"tslint": "^6.1.3",
