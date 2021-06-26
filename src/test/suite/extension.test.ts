@@ -7,18 +7,18 @@ import { after, before, test } from 'mocha';
 import ClosingLabelsDecorations from '../../closing-labels-decorations';
 
 suite('Extension Test Suite', () => {
-	before(() => {
-		vscode.window.showInformationMessage('Start all tests.');
-	});
+  before(() => {
+    vscode.window.showInformationMessage('Start all tests.');
+  });
 
-	after(() => {
-		vscode.window.showInformationMessage('All tests done!');
-	});
+  after(() => {
+    vscode.window.showInformationMessage('All tests done!');
+  });
 
-	test('Check generated html decorations', async () => {
-		const document = await vscode.workspace.openTextDocument({
-			language: 'html',
-			content: `<html>
+  test('Check generated html decorations', async () => {
+    const document = await vscode.workspace.openTextDocument({
+      language: 'html',
+      content: `<html>
 	<head>
 		<title>Test Document</title>
 	</head>
@@ -34,35 +34,25 @@ suite('Extension Test Suite', () => {
 		<div id="test-inline-both-id" class="test-inline-both-class"></div>
 	</body>
 </html>`,
-		});
+    });
 
-		const labels = new ClosingLabelsDecorations();
+    const labels = new ClosingLabelsDecorations();
 
-		assert.deepStrictEqual(
-			labels.getDocumentDecorations(document),
-			[
-				{
-					range: new vscode.Range(
-						new vscode.Position(6, 2),
-						new vscode.Position(6, 8),
-					),
-					renderOptions: { after: { contentText: '/#test-id' } },
-				},
-				{
-					range: new vscode.Range(
-						new vscode.Position(8, 2),
-						new vscode.Position(8, 8),
-					),
-					renderOptions: { after: { contentText: '/.test-class' } },
-				},
-				{
-					range: new vscode.Range(
-						new vscode.Position(10, 2),
-						new vscode.Position(10, 8),
-					),
-					renderOptions: { after: { contentText: '/#test-both-id.test-both-class' } },
-				},
-			],
-		);
-	});
+    assert.deepStrictEqual(labels.getDocumentDecorations(document), [
+      {
+        range: new vscode.Range(new vscode.Position(6, 2), new vscode.Position(6, 8)),
+        renderOptions: { after: { contentText: '/#test-id' } },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(8, 2), new vscode.Position(8, 8)),
+        renderOptions: { after: { contentText: '/.test-class' } },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(10, 2), new vscode.Position(10, 8)),
+        renderOptions: {
+          after: { contentText: '/#test-both-id.test-both-class' },
+        },
+      },
+    ]);
+  });
 });

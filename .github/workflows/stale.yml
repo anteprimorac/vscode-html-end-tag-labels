@@ -2,20 +2,19 @@ name: Mark stale issues and pull requests
 
 on:
   schedule:
-  - cron: "0 0 * * *"
+    - cron: '0 0 * * *'
 
 jobs:
   stale:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/stale@v3
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'Tagging this issue as Stale.'
-        stale-pr-message: 'Tagging this pull request as Stale.'
-        stale-issue-label: 'no-issue-activity'
-        exempt-issue-labels: 'awaiting-approval,work-in-progress'
-        stale-pr-label: 'no-pr-activity'
-        exempt-pr-labels: 'awaiting-approval,work-in-progress'
+      - uses: actions/stale@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-issue-message: 'Tagging this issue as Stale.'
+          stale-pr-message: 'Tagging this pull request as Stale.'
+          stale-issue-label: 'no-issue-activity'
+          exempt-issue-labels: 'awaiting-approval,work-in-progress'
+          stale-pr-label: 'no-pr-activity'
+          exempt-pr-labels: 'awaiting-approval,work-in-progress'
