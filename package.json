@@ -29,7 +29,8 @@
 		"onLanguage:blade",
 		"onLanguage:vue-html",
 		"onLanguage:svelte",
-		"onLanguage:nunjucks"
+    "onLanguage:erb",
+    "onLanguage:nunjucks"
 	],
 	"repository": {
 		"type": "git",
