@@ -18,39 +18,7 @@ Labels HTML end tags in VSCode.
 |-----------------------------|---------------------------------------------------------------------------------|
 | htmlEndTagLabels.labelColor | Label foreground color (if empty will use `editorCodeLens.foreground` instead). |
 
-## Release Notes
-
-### 0.6.0
-
-Publish extension to Open VSX Registry.
-
-### 0.5.0
-
-Basic support for Svelte files.
-
-### 0.4.0
-
-Basic support for PHP and twig files.
-
-### 0.3.0
-
-Label foreground color configuration.
-
-### 0.2.0
-
-Basic support for Blade and Vue.js HTML templates.
-
-### 0.1.2
-
-Improved labeling of multiple classes and empty attributes.
-
-### 0.1.1
-
-Fixed README.md image syntax.
-
-### 0.1.0
-
-Initial release.
+## [Release Notes](CHANGELOG.md)
 
 ## Contributors ✨
 
