@@ -28,7 +28,8 @@
 		"onLanguage:twig",
 		"onLanguage:blade",
 		"onLanguage:vue-html",
-		"onLanguage:svelte"
+		"onLanguage:svelte",
+		"onLanguage:erb"
 	],
 	"repository": {
 		"type": "git",
