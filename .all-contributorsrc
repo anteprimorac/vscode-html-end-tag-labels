@@ -50,6 +50,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "nicbet",
+      "name": "Nicolas Bettenburg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/718340?v=4",
+      "profile": "http://nicolas-bettenburg.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
