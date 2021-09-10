@@ -2,7 +2,7 @@
   "name": "html-end-tag-labels",
   "displayName": "HTML End Tag Labels",
   "description": "Labels HTML end tags in VSCode",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "author": {
     "email": "anteprimorachr@gmail.com",
     "name": "Ante Primorac",
