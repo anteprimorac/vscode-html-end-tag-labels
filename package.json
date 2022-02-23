@@ -71,6 +71,6 @@
     "vscode-test": "^1.6.1"
   },
   "dependencies": {
-    "vscode-html-languageservice": "^4.2.0"
+    "vscode-html-languageservice": "^4.2.2"
   }
 }
