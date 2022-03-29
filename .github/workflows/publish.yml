@@ -1,9 +1,9 @@
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
-name: Deploy Extension
+name: Publish Extension
 
 jobs:
   test:
@@ -27,7 +27,8 @@ jobs:
         with:
           run: npm test
 
-  deploy:
+  publish-open-vsx:
+    name: Publish Open VSX
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -38,11 +39,23 @@ jobs:
       - run: npm install
       - run: npm run vscode:prepublish
       - name: Publish to Open VSX Registry
-        uses: HaaLeo/publish-vscode-extension@v0
+        uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.OPEN_VSX_TOKEN }}
+
+  publish-vs-marketplace:
+    name: Publish VS Marketplace
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install
+      - run: npm run vscode:prepublish
       - name: Publish to Visual Studio Marketplace
-        uses: HaaLeo/publish-vscode-extension@v0
+        uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
           registryUrl: https://marketplace.visualstudio.com
