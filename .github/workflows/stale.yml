@@ -17,4 +17,4 @@ jobs:
           stale-issue-label: 'no-issue-activity'
           exempt-issue-labels: 'awaiting-approval,work-in-progress'
           stale-pr-label: 'no-pr-activity'
-          exempt-pr-labels: 'awaiting-approval,work-in-progress'
+          exempt-pr-labels: 'awaiting-approval,work-in-progress,help wanted'
