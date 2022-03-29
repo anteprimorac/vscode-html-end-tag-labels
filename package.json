@@ -30,7 +30,10 @@
     "onLanguage:vue-html",
     "onLanguage:svelte",
     "onLanguage:erb",
-    "onLanguage:nunjucks"
+    "onLanguage:nunjucks",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact"
   ],
   "repository": {
     "type": "git",
@@ -71,6 +74,10 @@
     "vscode-test": "^1.6.1"
   },
   "dependencies": {
+    "@babel/parser": "^7.17.8",
+    "@babel/traverse": "^7.17.3",
+    "@babel/types": "^7.17.0",
+    "@types/babel__traverse": "^7.14.2",
     "vscode-html-languageservice": "^4.0.8"
   }
 }
