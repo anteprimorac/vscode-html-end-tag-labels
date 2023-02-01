@@ -1,21 +1,54 @@
 import * as vscode from 'vscode';
-import { getLanguageService, LanguageService, SymbolKind } from 'vscode-html-languageservice';
+import {
+  getLanguageService as getHTMLLanguageService,
+  LanguageService as HTMLLanguageService,
+  SymbolKind as HTMLSymbolKind,
+} from 'vscode-html-languageservice';
+import * as babelParser from '@babel/parser';
+import type { ParserPlugin } from '@babel/parser';
+import babelTraverse from '@babel/traverse';
+import type { JSXAttribute } from '@babel/types';
 
 type HTMLEndTagDecoration = vscode.DecorationOptions & {
   renderOptions: { after: { contentText: string } };
 };
 
+function getJSXAttributeStringValue(attr?: JSXAttribute): string | undefined {
+  if (attr?.value) {
+    if (attr.value.type === 'StringLiteral' && typeof attr.value.value === 'string') {
+      return attr.value.value;
+    }
+
+    if (
+      attr.value.type === 'JSXExpressionContainer' &&
+      attr.value.expression.type === 'StringLiteral' &&
+      typeof attr.value.expression.value === 'string'
+    ) {
+      return attr.value.expression.value;
+    }
+  }
+
+  return undefined;
+}
+
 export default class ClosingLabelsDecorations implements vscode.Disposable {
   private activeEditor?: vscode.TextEditor;
   private subscriptions: vscode.Disposable[] = [];
-  private languageService?: LanguageService;
+  private htmlLanguageService?: HTMLLanguageService;
   private updateTimeout?: NodeJS.Timeout;
 
   private decorationType = this.createTextEditorDecoration();
 
+  private getHTMLLanguageService() {
+    if (!this.htmlLanguageService) {
+      this.htmlLanguageService = getHTMLLanguageService();
+    }
+
+    return this.htmlLanguageService;
+  }
+
   constructor() {
     this.update = this.update.bind(this);
-    this.languageService = getLanguageService();
 
     this.subscriptions.push(
       vscode.workspace.onDidChangeConfiguration((event) => {
@@ -79,22 +112,17 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
     this.updateTimeout = setTimeout(this.update, 500);
   }
 
-  getDocumentDecorations(input: vscode.TextDocument) {
-    if (!this.languageService) {
-      return [];
-    }
+  getHTMLDocumentDecorations(input: vscode.TextDocument) {
+    const htmlLanguageService = this.getHTMLLanguageService();
 
     const document = { ...input, uri: input.uri.toString() };
-    const symbols = this.languageService.findDocumentSymbols(
-      document,
-      this.languageService.parseHTMLDocument(document)
-    );
+    const symbols = htmlLanguageService.findDocumentSymbols(document, htmlLanguageService.parseHTMLDocument(document));
 
     const decorations: HTMLEndTagDecoration[] = symbols
       .filter((symbol) => {
         // field symbol
         return (
-          symbol.kind === SymbolKind.Field &&
+          symbol.kind === HTMLSymbolKind.Field &&
           // isn't html document
           !symbol.name.startsWith('html') &&
           // isn't child of html
@@ -171,12 +199,109 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
     return decorations;
   }
 
+  getJSXDocumentDecorations(input: vscode.TextDocument, options?: { typescript?: boolean }) {
+    const decorations: HTMLEndTagDecoration[] = [];
+
+    const plugins: ParserPlugin[] = ['jsx'];
+
+    if (options?.typescript) {
+      plugins.push('typescript');
+    }
+
+    const ast = babelParser.parse(input.getText(), {
+      allowAwaitOutsideFunction: true,
+      allowImportExportEverywhere: true,
+      allowReturnOutsideFunction: true,
+      allowSuperOutsideMethod: true,
+      allowUndeclaredExports: true,
+      attachComment: false,
+      createParenthesizedExpressions: false,
+      errorRecovery: true,
+      ranges: true,
+      strictMode: false,
+      tokens: true,
+      plugins,
+    });
+
+    babelTraverse(ast, {
+      JSXElement({ node }) {
+        if (
+          !node.selfClosing &&
+          node.closingElement &&
+          node.closingElement.loc &&
+          node.openingElement.loc &&
+          node.openingElement.name.type === 'JSXIdentifier' &&
+          node.openingElement.name.name.toLowerCase() === node.openingElement.name.name &&
+          node.openingElement.loc.end.line !== node.closingElement.loc.start.line
+        ) {
+          let id: string | undefined;
+          let className: string[] = [];
+          const idAttr = node.openingElement.attributes.find(
+            (attribute): attribute is JSXAttribute => attribute.type === 'JSXAttribute' && attribute.name.name === 'id'
+          );
+          const classNameAttr = node.openingElement.attributes.find(
+            (attribute): attribute is JSXAttribute =>
+              attribute.type === 'JSXAttribute' && attribute.name.name === 'className'
+          );
+          const idAttrVal = getJSXAttributeStringValue(idAttr);
+          const classNameAttrVal = getJSXAttributeStringValue(classNameAttr);
+
+          if (idAttrVal) {
+            id = idAttrVal.trim();
+
+            if (id.length < 1) {
+              id = undefined;
+            }
+          }
+
+          if (classNameAttrVal) {
+            className = classNameAttrVal
+              .trim()
+              .split(' ')
+              .map((item) => item.trim())
+              .filter((item) => item.length);
+          }
+
+          if (id || className.length) {
+            decorations.push({
+              range: new vscode.Range(
+                new vscode.Position(node.closingElement.loc.start.line - 1, node.closingElement.loc.start.column),
+                new vscode.Position(node.closingElement.loc.end.line - 1, node.closingElement.loc.end.column)
+              ),
+              renderOptions: {
+                after: {
+                  contentText: '/' + (id ? `#${id}` : '') + (className.length > 0 ? `.${className.join('.')}` : ''),
+                },
+              },
+            });
+          }
+        }
+      },
+    });
+
+    return decorations;
+  }
+
   update() {
-    if (!this.languageService || !this.activeEditor) {
+    if (!this.activeEditor) {
       return;
     }
 
-    this.activeEditor.setDecorations(this.decorationType, this.getDocumentDecorations(this.activeEditor.document));
+    const languageId = this.activeEditor.document.languageId.toLowerCase();
+
+    if (['javascript', 'javascriptreact'].includes(languageId)) {
+      this.activeEditor.setDecorations(this.decorationType, this.getJSXDocumentDecorations(this.activeEditor.document));
+    } else if (languageId === 'typescriptreact') {
+      this.activeEditor.setDecorations(
+        this.decorationType,
+        this.getJSXDocumentDecorations(this.activeEditor.document, { typescript: true })
+      );
+    } else {
+      this.activeEditor.setDecorations(
+        this.decorationType,
+        this.getHTMLDocumentDecorations(this.activeEditor.document)
+      );
+    }
   }
 
   public dispose() {
