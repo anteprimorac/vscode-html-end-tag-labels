@@ -4,7 +4,7 @@
 
 [![Open VSX Version](https://img.shields.io/open-vsx/v/anteprimorac/html-end-tag-labels)](https://open-vsx.org/extension/anteprimorac/html-end-tag-labels) [![Open VSX Downloads](https://img.shields.io/open-vsx/dt/anteprimorac/html-end-tag-labels?label=open%20vsx%20downloads)](https://open-vsx.org/extension/anteprimorac/html-end-tag-labels)
 
-[![Test](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Test/badge.svg)](https://github.com/anteprimorac/vscode-html-end-tag-labels/actions?query=workflow%3ATest) [![Deploy Extension](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Deploy%20Extension/badge.svg)](https://github.com/anteprimorac/vscode-html-end-tag-labels/actions?query=workflow%3A%22Deploy+Extension%22)
+[![Test](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Test/badge.svg)](https://github.com/anteprimorac/vscode-html-end-tag-labels/actions?query=workflow%3ATest) [![Publish Extension](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Publish%20Extension/badge.svg)](https://github.com/anteprimorac/vscode-html-end-tag-labels/actions?query=workflow%3A%22Publish+Extension%22)
 
 Labels HTML end tags in VSCode.
 
