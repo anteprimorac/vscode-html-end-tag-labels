@@ -118,6 +118,13 @@ function Component() {
       <div className="test-inline-class"></div>
       <div id="test-inline-id"></div>
       <div id="test-inline-both-id" class="test-inline-both-class"></div>
+      <Box id="test-custom-id">
+      </Box>
+      <Box className="test-custom-class">
+      </Box>
+      <Box className="test-custom-both-class" id="test-custom-both-id">
+      </Box>
+      <Box className="test-custom-inline-class"></Box>
     </div>
   );
 }
@@ -143,6 +150,20 @@ export default Component;
           after: { contentText: '/#test-both-id.test-both-class' },
         },
       },
+      {
+        range: new vscode.Range(new vscode.Position(15, 6), new vscode.Position(15, 12)),
+        renderOptions: { after: { contentText: '/#test-custom-id' } },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(17, 6), new vscode.Position(17, 12)),
+        renderOptions: { after: { contentText: '/.test-custom-class' } },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(19, 6), new vscode.Position(19, 12)),
+        renderOptions: {
+          after: { contentText: '/#test-custom-both-id.test-custom-both-class' },
+        },
+      },
     ]);
   });
 
@@ -164,6 +185,13 @@ const Component: React.VFC<{ test: string }> = ({ test }) => {
       <div className="test-inline-class"></div>
       <div id="test-inline-id"></div>
       <div id="test-inline-both-id" class="test-inline-both-class"></div>
+      <Box id="test-custom-id">
+      </Box>
+      <Box className="test-custom-class">
+      </Box>
+      <Box className="test-custom-both-class" id="test-custom-both-id">
+      </Box>
+      <Box className="test-custom-inline-class"></Box>
     </div>
   );
 }
@@ -187,6 +215,20 @@ export default Component;
         range: new vscode.Range(new vscode.Position(11, 6), new vscode.Position(11, 12)),
         renderOptions: {
           after: { contentText: '/#test-both-id.test-both-class' },
+        },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(16, 6), new vscode.Position(16, 12)),
+        renderOptions: { after: { contentText: '/#test-custom-id' } },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(18, 6), new vscode.Position(18, 12)),
+        renderOptions: { after: { contentText: '/.test-custom-class' } },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(20, 6), new vscode.Position(20, 12)),
+        renderOptions: {
+          after: { contentText: '/#test-custom-both-id.test-custom-both-class' },
         },
       },
     ]);

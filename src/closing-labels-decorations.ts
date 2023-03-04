@@ -231,7 +231,6 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
           node.closingElement.loc &&
           node.openingElement.loc &&
           node.openingElement.name.type === 'JSXIdentifier' &&
-          node.openingElement.name.name.toLowerCase() === node.openingElement.name.name &&
           node.openingElement.loc.end.line !== node.closingElement.loc.start.line
         ) {
           let id: string | undefined;
