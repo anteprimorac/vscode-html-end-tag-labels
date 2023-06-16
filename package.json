@@ -61,6 +61,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@vscode/test-electron": "^2.3.3",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "^16.18.36",
@@ -70,8 +71,7 @@
     "mocha": "^9.2.2",
     "prettier": "^2.8.8",
     "tslint": "^6.1.3",
-    "typescript": "^5.0.2",
-    "vscode-test": "^1.6.1"
+    "typescript": "^5.0.2"
   },
   "dependencies": {
     "@babel/parser": "^7.22.5",
