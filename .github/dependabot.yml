@@ -1,27 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: '/'
+    directory: "/"
     schedule:
       interval: daily
-      time: '04:00'
+      time: "04:00"
     open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: '@types/node'
-        versions:
-          - '>= 13.a, < 14'
-      - dependency-name: '@types/node'
-        versions:
-          - '> 14.10.1, < 15'
-      - dependency-name: '@types/node'
-        versions:
-          - '>= 14.a, < 15'
-      - dependency-name: '@types/node'
-        versions:
-          - '>= 15, < 16'
-      - dependency-name: '@types/vscode'
-        versions:
-          - '> 1.42.0, < 2'
-      - dependency-name: '@types/vscode'
-        versions:
-          - '>= 1.51.a, < 2'
