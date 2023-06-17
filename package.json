@@ -50,6 +50,11 @@
           "pattern": "(^$)|(^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)",
           "markdownDescription": "Label foreground color (if empty will use `editorCodeLens.foreground` instead).",
           "markdownDeprecationMessage": "This setting is deprecated, please use `htmlEndTagLabels.labelColor` Color Theme option instead. Read more about Color Theme options [here](https://code.visualstudio.com/api/references/theme-color)."
+        },
+        "htmlEndTagLabels.labelPrefix": {
+          "type": "string",
+          "default": "/",
+          "markdownDescription": "Label prefix. Default: `/`."
         }
       }
     },

@@ -20,6 +20,10 @@ Labels HTML end tags in VSCode.
 
 ## Settings
 
+| Name                         | Description                 |
+| ---------------------------- | --------------------------- |
+| htmlEndTagLabels.labelPrefix | Label prefix (default: `/`) |
+
 > **Warning**: The following settings are deprecated and will be removed in a future release. Use theme colors instead.
 
 | Name                            | Description                                                                         |
