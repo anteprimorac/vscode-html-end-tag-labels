@@ -83,11 +83,18 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
   }
 
   createTextEditorDecoration() {
-    let color = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor;
+    const themeLabelColor = new vscode.ThemeColor('htmlEndTagLabels.labelColor');
+    const settingsLabelColor = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor;
+    let labelColor = themeLabelColor;
+
+    // Use settings color if it's not empty
+    if (typeof settingsLabelColor === 'string' && settingsLabelColor.startsWith('#')) {
+      labelColor = settingsLabelColor;
+    }
 
     return vscode.window.createTextEditorDecorationType({
       after: {
-        color: color || new vscode.ThemeColor('editorCodeLens.foreground'),
+        color: labelColor,
         margin: '2px',
       },
       rangeBehavior: vscode.DecorationRangeBehavior.ClosedOpen,
