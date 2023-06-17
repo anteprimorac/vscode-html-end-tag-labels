@@ -2,7 +2,7 @@
   "name": "html-end-tag-labels",
   "displayName": "HTML End Tag Labels",
   "description": "Labels HTML end tags in VSCode",
-  "version": "0.11.0",
+  "version": "1.0.0",
   "author": {
     "email": "anteprimorachr@gmail.com",
     "name": "Ante Primorac",
@@ -42,16 +42,34 @@
   "main": "./out/extension.js",
   "contributes": {
     "configuration": {
-      "title": "Html End Tag Labels",
+      "title": "HTML End Tag Labels",
       "properties": {
         "htmlEndTagLabels.labelColor": {
           "type": "string",
           "default": "",
           "pattern": "(^$)|(^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)",
-          "markdownDescription": "Label foreground color (if empty will use `editorCodeLens.foreground` instead)."
+          "markdownDescription": "Label foreground color (if empty will use `editorCodeLens.foreground` instead).",
+          "markdownDeprecationMessage": "This setting is deprecated, please use `htmlEndTagLabels.labelColor` Color Theme option instead. Read more about Color Theme options [here](https://code.visualstudio.com/api/references/theme-color)."
+        },
+        "htmlEndTagLabels.labelPrefix": {
+          "type": "string",
+          "default": "/",
+          "markdownDescription": "Label prefix. Default: `/`."
         }
       }
-    }
+    },
+    "colors": [
+      {
+        "id": "htmlEndTagLabels.labelColor",
+        "description": "Label foreground color",
+        "defaults": {
+          "light": "editorCodeLens.foreground",
+          "dark": "editorCodeLens.foreground",
+          "highContrast": "editorCodeLens.foreground",
+          "highContrastLight": "editorCodeLens.foreground"
+        }
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -61,11 +79,10 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@vscode/test-electron": "^2.3.3",
     "@types/mocha": "^9.1.1",
     "@types/node": "^16.18.36",
     "@types/vscode": "~1.78.0",
-    "all-contributors-cli": "^6.26.0",
+    "@vscode/test-electron": "^2.3.3",
     "glob": "^10.2.7",
     "mocha": "^9.2.2",
     "prettier": "^2.8.8",

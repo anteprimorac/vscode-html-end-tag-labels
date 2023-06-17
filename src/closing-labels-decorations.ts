@@ -83,11 +83,18 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
   }
 
   createTextEditorDecoration() {
-    let color = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor;
+    const themeLabelColor = new vscode.ThemeColor('htmlEndTagLabels.labelColor');
+    const settingsLabelColor = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor;
+    let labelColor = themeLabelColor;
+
+    // Use settings color if it's not empty
+    if (typeof settingsLabelColor === 'string' && settingsLabelColor.startsWith('#')) {
+      labelColor = settingsLabelColor;
+    }
 
     return vscode.window.createTextEditorDecorationType({
       after: {
-        color: color || new vscode.ThemeColor('editorCodeLens.foreground'),
+        color: labelColor,
         margin: '2px',
       },
       rangeBehavior: vscode.DecorationRangeBehavior.ClosedOpen,
@@ -185,12 +192,14 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
         const endTagEndChar = symbol.location.range.end.character;
         const endTagStartChar = endTagEndChar >= endTagLength ? endTagEndChar - endTagLength : endTagEndChar;
 
+        const labelPrefix = vscode.workspace.getConfiguration('htmlEndTagLabels').labelPrefix || '/';
+
         return {
           range: new vscode.Range(
             new vscode.Position(endTagLine, endTagStartChar),
             new vscode.Position(endTagLine, endTagEndChar)
           ),
-          renderOptions: { after: { contentText: `/${label}` } },
+          renderOptions: { after: { contentText: `${labelPrefix}${label}` } },
         };
       })
       // Filter out decorations with empty label.
@@ -262,6 +271,8 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
           }
 
           if (id || className.length) {
+            const labelPrefix = vscode.workspace.getConfiguration('htmlEndTagLabels').labelPrefix || '/';
+
             decorations.push({
               range: new vscode.Range(
                 new vscode.Position(node.closingElement.loc.start.line - 1, node.closingElement.loc.start.column),
@@ -269,7 +280,8 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
               ),
               renderOptions: {
                 after: {
-                  contentText: '/' + (id ? `#${id}` : '') + (className.length > 0 ? `.${className.join('.')}` : ''),
+                  contentText:
+                    labelPrefix + (id ? `#${id}` : '') + (className.length > 0 ? `.${className.join('.')}` : ''),
                 },
               },
             });

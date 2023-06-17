@@ -5,6 +5,16 @@ All notable changes to this extension will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] 2023-06-17
+### Added
+- `htmlEndTagLabels.labelColor` theme color option that replaces the deprecated `htmlEndTagLabels.labelColor` settings option (fixes #196 and #320)
+- `htmlEndTagLabels.labelPrefix` settings option (fixes #483)
+
+## Changed
+- bump dependencies
+- minimum vscode version is now 1.78.0
+- bump minimum node version to 16.0.0
+
 ## [0.11.0] 2023-03-04
 ### Added
 - support for JSX custom tags
