@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `htmlEndTagLabels.labelColor` theme color option that replaces the deprecated `htmlEndTagLabels.labelColor` settings option (fixes #196 and #320)
 - `htmlEndTagLabels.labelPrefix` settings option (fixes #483)
 
-## Changed
+### Changed
 - bump dependencies
 - minimum vscode version is now 1.78.0
 - bump minimum node version to 16.0.0
