@@ -6,7 +6,9 @@
 
 [![Test](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Test/badge.svg)](https://github.com/anteprimorac/vscode-html-end-tag-labels/actions?query=workflow%3ATest) [![Publish Extension](https://github.com/anteprimorac/vscode-html-end-tag-labels/workflows/Publish%20Extension/badge.svg)](https://github.com/anteprimorac/vscode-html-end-tag-labels/actions?query=workflow%3A%22Publish+Extension%22)
 
-Labels HTML end tags in VSCode.
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/anteprimorac)
+
+The HTML End Tag Labels extension for Visual Studio Code is a must-have tool for developers working with HTML-like markup in HTML, JSX, Vue, Svelte, and PHP files. This versatile extension enhances your coding experience by adding clear and visually distinctive labels to the closing tags in these file types. Whether you're building web applications, working on frontend frameworks, or developing server-side applications, HTML End Tag Labels makes navigating and understanding your code's structure effortless. Say goodbye to tedious tag matching and hello to improved productivity and code readability with this user-friendly extension.
 
 ## Features
 
