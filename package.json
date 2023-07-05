@@ -91,7 +91,7 @@
   },
   "dependencies": {
     "@babel/parser": "^7.22.5",
-    "@babel/traverse": "^7.22.5",
+    "@babel/traverse": "^7.22.6",
     "@babel/types": "^7.22.5",
     "@types/babel__traverse": "^7.20.1",
     "vscode-html-languageservice": "^5.0.6"
