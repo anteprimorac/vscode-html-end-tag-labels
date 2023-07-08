@@ -8,6 +8,3 @@ import ClosingLabelsDecorations from './closing-labels-decorations';
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(new ClosingLabelsDecorations());
 }
-
-// this method is called when your extension is deactivated
-export function deactivate() {}
