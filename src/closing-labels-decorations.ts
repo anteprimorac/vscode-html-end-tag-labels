@@ -152,8 +152,8 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
         const separatorCharIndex = hasIdAttr ? hashCharIndex : dotCharIndex;
 
         const tagName = symbol.name.substring(0, separatorCharIndex);
-        let id: string = '';
-        let classes: string = '';
+        let id = '';
+        let classes = '';
 
         if (hasIdAttr) {
           let idAttr: string;
