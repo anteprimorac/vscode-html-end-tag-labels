@@ -97,6 +97,6 @@
     "@babel/traverse": "^7.23.9",
     "@babel/types": "^7.24.0",
     "@types/babel__traverse": "^7.20.5",
-    "vscode-html-languageservice": "^5.1.2"
+    "vscode-html-languageservice": "^5.2.0"
   }
 }
