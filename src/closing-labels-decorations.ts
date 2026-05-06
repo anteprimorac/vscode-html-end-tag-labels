@@ -13,6 +13,8 @@ type HTMLEndTagDecoration = vscode.DecorationOptions & {
   renderOptions: { after: { contentText: string } };
 };
 
+type LabelMode = 'idAndClass' | 'id' | 'class';
+
 function getJSXAttributeStringValue(attr?: JSXAttribute): string | undefined {
   if (attr?.value) {
     if (attr.value.type === 'StringLiteral' && typeof attr.value.value === 'string') {
@@ -38,6 +40,37 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
   private updateTimeout?: NodeJS.Timeout;
 
   private decorationType = this.createTextEditorDecoration();
+
+  private getConfiguration(document?: vscode.TextDocument) {
+    return vscode.workspace.getConfiguration('htmlEndTagLabels', document);
+  }
+
+  private isEnabled(document?: vscode.TextDocument) {
+    return this.getConfiguration(document).get('enabled', true);
+  }
+
+  private getLabelPrefix(document?: vscode.TextDocument) {
+    return this.getConfiguration(document).get('labelPrefix', '/');
+  }
+
+  private getLabelMode(document?: vscode.TextDocument): LabelMode {
+    return this.getConfiguration(document).get<LabelMode>('labelMode', 'idAndClass');
+  }
+
+  private getLabelText(id: string, classes: string, document?: vscode.TextDocument) {
+    const labelMode = this.getLabelMode(document);
+    let label = '';
+
+    if (labelMode === 'id') {
+      label = id;
+    } else if (labelMode === 'class') {
+      label = classes;
+    } else {
+      label = `${id}${classes}`;
+    }
+
+    return label ? `${this.getLabelPrefix(document)}${label}` : '';
+  }
 
   private getHTMLLanguageService() {
     if (!this.htmlLanguageService) {
@@ -185,21 +218,17 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
           }
         }
 
-        const label = `${id}${classes}`;
-
         const endTagLength = tagName.length + 3; // 3 chars for `</>`
         const endTagLine = symbol.location.range.end.line;
         const endTagEndChar = symbol.location.range.end.character;
         const endTagStartChar = endTagEndChar >= endTagLength ? endTagEndChar - endTagLength : endTagEndChar;
-
-        const labelPrefix = vscode.workspace.getConfiguration('htmlEndTagLabels').labelPrefix || '/';
 
         return {
           range: new vscode.Range(
             new vscode.Position(endTagLine, endTagStartChar),
             new vscode.Position(endTagLine, endTagEndChar)
           ),
-          renderOptions: { after: { contentText: `${labelPrefix}${label}` } },
+          renderOptions: { after: { contentText: this.getLabelText(id, classes, input) } },
         };
       })
       // Filter out decorations with empty label.
@@ -210,6 +239,7 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 
   getJSXDocumentDecorations(input: vscode.TextDocument, options?: { typescript?: boolean }) {
     const decorations: HTMLEndTagDecoration[] = [];
+    const getLabelText = this.getLabelText.bind(this);
 
     const plugins: ParserPlugin[] = ['jsx'];
 
@@ -271,8 +301,6 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
           }
 
           if (id || className.length) {
-            const labelPrefix = vscode.workspace.getConfiguration('htmlEndTagLabels').labelPrefix || '/';
-
             decorations.push({
               range: new vscode.Range(
                 new vscode.Position(node.closingElement.loc.start.line - 1, node.closingElement.loc.start.column),
@@ -280,8 +308,11 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
               ),
               renderOptions: {
                 after: {
-                  contentText:
-                    labelPrefix + (id ? `#${id}` : '') + (className.length > 0 ? `.${className.join('.')}` : ''),
+                  contentText: getLabelText(
+                    id ? `#${id}` : '',
+                    className.length > 0 ? `.${className.join('.')}` : '',
+                    input
+                  ),
                 },
               },
             });
@@ -295,6 +326,11 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 
   update() {
     if (!this.activeEditor) {
+      return;
+    }
+
+    if (!this.isEnabled(this.activeEditor.document)) {
+      this.activeEditor.setDecorations(this.decorationType, []);
       return;
     }
 

@@ -22,9 +22,17 @@ The HTML End Tag Labels extension for Visual Studio Code is a must-have tool for
 
 ## Settings
 
-| Name                         | Description                 |
-| ---------------------------- | --------------------------- |
+| Name                         | Description                                                  |
+| ---------------------------- | ------------------------------------------------------------ |
+| htmlEndTagLabels.enabled     | Enable or disable end tag labels.                            |
+| htmlEndTagLabels.labelMode   | Show `idAndClass`, `id`, or `class` labels. Default: `idAndClass`. |
 | htmlEndTagLabels.labelPrefix | Label prefix (default: `/`) |
+
+## Commands
+
+| Name                            | Description                                                  |
+| ------------------------------- | ------------------------------------------------------------ |
+| HTML End Tag Labels: Toggle Enabled | Toggle end tag labels on or off. You can assign your own keyboard shortcut from the Keyboard Shortcuts editor. |
 
 > **Warning**: The following settings are deprecated and will be removed in a future release. Use theme colors instead.
 

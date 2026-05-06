@@ -3,15 +3,37 @@ import * as assert from 'assert';
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
-import { after, before, test } from 'mocha';
+import { after, before, beforeEach, test } from 'mocha';
 import ClosingLabelsDecorations from '../../closing-labels-decorations';
 
 suite('Extension Test Suite', () => {
+  let originalEnabled = true;
+  let originalLabelMode = 'idAndClass';
+
   before(() => {
     vscode.window.showInformationMessage('Start all tests.');
   });
 
-  after(() => {
+  before(async () => {
+    const configuration = vscode.workspace.getConfiguration('htmlEndTagLabels');
+
+    originalEnabled = configuration.get<boolean>('enabled', true);
+    originalLabelMode = configuration.get<string>('labelMode', 'idAndClass');
+  });
+
+  beforeEach(async () => {
+    const configuration = vscode.workspace.getConfiguration('htmlEndTagLabels');
+
+    await configuration.update('enabled', true, vscode.ConfigurationTarget.Global);
+    await configuration.update('labelMode', 'idAndClass', vscode.ConfigurationTarget.Global);
+  });
+
+  after(async () => {
+    const configuration = vscode.workspace.getConfiguration('htmlEndTagLabels');
+
+    await configuration.update('enabled', originalEnabled, vscode.ConfigurationTarget.Global);
+    await configuration.update('labelMode', originalLabelMode, vscode.ConfigurationTarget.Global);
+
     vscode.window.showInformationMessage('All tests done!');
   });
 
@@ -232,5 +254,84 @@ export default Component;
         },
       },
     ]);
+  });
+
+  test('Check generated html decorations in id only mode', async () => {
+    const configuration = vscode.workspace.getConfiguration('htmlEndTagLabels');
+
+    await configuration.update('labelMode', 'id', vscode.ConfigurationTarget.Global);
+
+    const document = await vscode.workspace.openTextDocument({
+      language: 'html',
+      content: `<div id="test-id">
+</div>
+<div class="test-class">
+</div>
+<div id="test-both-id" class="test-both-class">
+</div>`,
+    });
+
+    const labels = new ClosingLabelsDecorations();
+
+    assert.deepStrictEqual(labels.getHTMLDocumentDecorations(document), [
+      {
+        range: new vscode.Range(new vscode.Position(1, 0), new vscode.Position(1, 6)),
+        renderOptions: { after: { contentText: '/#test-id' } },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(5, 0), new vscode.Position(5, 6)),
+        renderOptions: { after: { contentText: '/#test-both-id' } },
+      },
+    ]);
+  });
+
+  test('Check generated jsx decorations in class only mode', async () => {
+    const configuration = vscode.workspace.getConfiguration('htmlEndTagLabels');
+
+    await configuration.update('labelMode', 'class', vscode.ConfigurationTarget.Global);
+
+    const document = await vscode.workspace.openTextDocument({
+      language: 'javascriptreact',
+      content: `function Component() {
+  return (
+    <>
+      <div id="test-id">
+      </div>
+      <div className="test-class other-class">
+      </div>
+      <div id="test-both-id" className="test-both-class">
+      </div>
+    </>
+  );
+}`,
+    });
+
+    const labels = new ClosingLabelsDecorations();
+
+    assert.deepStrictEqual(labels.getJSXDocumentDecorations(document), [
+      {
+        range: new vscode.Range(new vscode.Position(5, 6), new vscode.Position(5, 12)),
+        renderOptions: { after: { contentText: '/.test-class.other-class' } },
+      },
+      {
+        range: new vscode.Range(new vscode.Position(7, 6), new vscode.Position(7, 12)),
+        renderOptions: { after: { contentText: '/.test-both-class' } },
+      },
+    ]);
+  });
+
+  test('Check toggle command updates enabled setting', async () => {
+    const extension = vscode.extensions.getExtension('anteprimorac.html-end-tag-labels');
+    const configuration = vscode.workspace.getConfiguration('htmlEndTagLabels');
+
+    await extension?.activate();
+    await configuration.update('enabled', true, vscode.ConfigurationTarget.Global);
+    await vscode.commands.executeCommand('htmlEndTagLabels.toggleEnabled');
+
+    assert.strictEqual(configuration.get('enabled'), false);
+
+    await vscode.commands.executeCommand('htmlEndTagLabels.toggleEnabled');
+
+    assert.strictEqual(configuration.get('enabled'), true);
   });
 });
