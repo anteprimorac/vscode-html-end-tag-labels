@@ -167,6 +167,32 @@ export default Component;
     ]);
   });
 
+  test('Check unsupported rust documents do not generate html decorations', async () => {
+    const document = await vscode.workspace.openTextDocument({
+      language: 'rust',
+      content: `impl AlignmentSnapper {
+  pub fn snap_bbox_points(&mut self, point: &SnapCandidatePoint) {
+    if let Some(point_on_x) = point_on_x {
+      let distance_to_snapped = point.document_point.distance(point_on_x);
+      let distance_to_align_target = point_on_x.distance(target_position);
+      if distance_to_snapped < tolerance && snap_x.as_ref().map_or(true, |point| distance_to_align_target < point.distance_to_align_target) {
+        snap_x = Some(SnappedPoint {
+          distance: distance_to_snapped,
+          distance_to_align_target,
+          ..Default::default()
+        });
+      }
+    }
+  }
+}
+`,
+    });
+
+    const labels = new ClosingLabelsDecorations();
+
+    assert.deepStrictEqual(labels.getHTMLDocumentDecorations(document), []);
+  });
+
   test('Check generated typescriptreact decorations', async () => {
     const document = await vscode.workspace.openTextDocument({
       language: 'typescriptreact',
