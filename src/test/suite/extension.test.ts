@@ -167,7 +167,7 @@ export default Component;
     ]);
   });
 
-  test('Check unsupported rust documents do not generate html decorations', async () => {
+  test('Check unsupported Rust documents do not generate html decorations', async () => {
     const document = await vscode.workspace.openTextDocument({
       language: 'rust',
       content: `impl AlignmentSnapper {
