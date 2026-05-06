@@ -328,10 +328,10 @@ export default Component;
     await configuration.update('enabled', true, vscode.ConfigurationTarget.Global);
     await vscode.commands.executeCommand('htmlEndTagLabels.toggleEnabled');
 
-    assert.strictEqual(configuration.get('enabled', true), false);
+    assert.strictEqual(configuration.get('enabled'), false);
 
     await vscode.commands.executeCommand('htmlEndTagLabels.toggleEnabled');
 
-    assert.strictEqual(configuration.get('enabled', false), true);
+    assert.strictEqual(configuration.get('enabled'), true);
   });
 });
