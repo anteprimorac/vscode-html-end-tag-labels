@@ -52,15 +52,29 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 
     this.subscriptions.push(
       vscode.workspace.onDidChangeConfiguration((event) => {
-        if (!event.affectsConfiguration('htmlEndTagLabels')) {
+        const affectsLabelSettings = event.affectsConfiguration('htmlEndTagLabels');
+        const affectsThemeColors = event.affectsConfiguration('workbench.colorCustomizations');
+
+        if (!affectsLabelSettings && !affectsThemeColors) {
           return;
         }
 
-        this.decorationType = this.createTextEditorDecoration();
+        this.refreshDecorationType();
 
-        if (this.activeEditor && event.affectsConfiguration('htmlEndTagLabels', this.activeEditor.document)) {
+        if (
+          this.activeEditor &&
+          (event.affectsConfiguration('htmlEndTagLabels', this.activeEditor.document) ||
+            event.affectsConfiguration('workbench.colorCustomizations', this.activeEditor.document))
+        ) {
           this.triggerUpdate();
         }
+      })
+    );
+
+    this.subscriptions.push(
+      vscode.window.onDidChangeActiveColorTheme(() => {
+        this.refreshDecorationType();
+        this.triggerUpdate();
       })
     );
 
@@ -83,22 +97,28 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
   }
 
   createTextEditorDecoration() {
-    const themeLabelColor = new vscode.ThemeColor('htmlEndTagLabels.labelColor');
-    const settingsLabelColor = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor;
-    let labelColor = themeLabelColor;
-
-    // Use settings color if it's not empty
-    if (typeof settingsLabelColor === 'string' && settingsLabelColor.startsWith('#')) {
-      labelColor = settingsLabelColor;
-    }
-
     return vscode.window.createTextEditorDecorationType({
       after: {
-        color: labelColor,
+        color: this.getLabelColor(),
         margin: '2px',
       },
       rangeBehavior: vscode.DecorationRangeBehavior.ClosedOpen,
     });
+  }
+
+  private getLabelColor() {
+    const settingsLabelColor = vscode.workspace.getConfiguration('htmlEndTagLabels').labelColor;
+
+    if (typeof settingsLabelColor === 'string' && settingsLabelColor.startsWith('#')) {
+      return settingsLabelColor;
+    }
+
+    return new vscode.ThemeColor('htmlEndTagLabels.labelColor');
+  }
+
+  private refreshDecorationType() {
+    this.decorationType.dispose();
+    this.decorationType = this.createTextEditorDecoration();
   }
 
   setActiveEditor(editor: vscode.TextEditor | undefined) {
@@ -317,6 +337,12 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 
   public dispose() {
     this.activeEditor = undefined;
+    this.decorationType.dispose();
+
+    if (this.updateTimeout) {
+      clearTimeout(this.updateTimeout);
+    }
+
     this.subscriptions.forEach((s) => s.dispose());
   }
 }
