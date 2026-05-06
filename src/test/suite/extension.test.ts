@@ -233,4 +233,67 @@ export default Component;
       },
     ]);
   });
+
+  test('Returns contributed theme color by default for label color', () => {
+    const originalGetConfiguration = vscode.workspace.getConfiguration;
+
+    try {
+      (vscode.workspace as typeof vscode.workspace & {
+        getConfiguration: typeof vscode.workspace.getConfiguration;
+      }).getConfiguration = ((section?: string) => {
+        if (section === 'htmlEndTagLabels') {
+          return {
+            labelColor: '',
+            labelPrefix: '/',
+          } as never;
+        }
+
+        return originalGetConfiguration(section);
+      }) as typeof vscode.workspace.getConfiguration;
+
+      const labels = new ClosingLabelsDecorations();
+      const labelColor = (labels as unknown as { getLabelColor: () => string | vscode.ThemeColor }).getLabelColor();
+
+      assert.ok(labelColor instanceof vscode.ThemeColor);
+      assert.deepStrictEqual(labelColor, new vscode.ThemeColor('htmlEndTagLabels.labelColor'));
+
+      labels.dispose();
+    } finally {
+      (vscode.workspace as typeof vscode.workspace & {
+        getConfiguration: typeof vscode.workspace.getConfiguration;
+      }).getConfiguration = originalGetConfiguration;
+    }
+  });
+
+  test('Returns deprecated hex setting as label color fallback', () => {
+    const originalGetConfiguration = vscode.workspace.getConfiguration;
+
+    try {
+      (vscode.workspace as typeof vscode.workspace & {
+        getConfiguration: typeof vscode.workspace.getConfiguration;
+      }).getConfiguration = ((section?: string) => {
+        if (section === 'htmlEndTagLabels') {
+          return {
+            labelColor: '#ff0000',
+            labelPrefix: '/',
+          } as never;
+        }
+
+        return originalGetConfiguration(section);
+      }) as typeof vscode.workspace.getConfiguration;
+
+      const labels = new ClosingLabelsDecorations();
+
+      assert.strictEqual(
+        (labels as unknown as { getLabelColor: () => string | vscode.ThemeColor }).getLabelColor(),
+        '#ff0000'
+      );
+
+      labels.dispose();
+    } finally {
+      (vscode.workspace as typeof vscode.workspace & {
+        getConfiguration: typeof vscode.workspace.getConfiguration;
+      }).getConfiguration = originalGetConfiguration;
+    }
+  });
 });
