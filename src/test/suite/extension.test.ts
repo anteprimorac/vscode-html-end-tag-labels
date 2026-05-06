@@ -3,7 +3,7 @@ import * as assert from 'assert';
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
-import { after, afterEach, before, beforeEach, test } from 'mocha';
+import { after, before, beforeEach, test } from 'mocha';
 import ClosingLabelsDecorations from '../../closing-labels-decorations';
 
 suite('Extension Test Suite', () => {
@@ -25,13 +25,6 @@ suite('Extension Test Suite', () => {
   });
 
   beforeEach(async () => {
-    const configuration = vscode.workspace.getConfiguration('htmlEndTagLabels');
-
-    await configuration.update('enabled', true, vscode.ConfigurationTarget.Global);
-    await configuration.update('labelMode', 'idAndClass', vscode.ConfigurationTarget.Global);
-  });
-
-  afterEach(async () => {
     const configuration = vscode.workspace.getConfiguration('htmlEndTagLabels');
 
     await configuration.update('enabled', true, vscode.ConfigurationTarget.Global);
