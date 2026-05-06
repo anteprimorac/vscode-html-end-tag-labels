@@ -124,7 +124,6 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
     this.decorationType.dispose();
     this.decorationType = this.createTextEditorDecoration();
   }
-
   private isHTMLDocument(input: vscode.TextDocument) {
     return HTML_DOCUMENT_LANGUAGE_IDS.has(input.languageId.toLowerCase());
   }
