@@ -19,9 +19,6 @@ suite('Extension Test Suite', () => {
 
     originalEnabled = configuration.get<boolean>('enabled', true);
     originalLabelMode = configuration.get<string>('labelMode', 'idAndClass');
-
-    await configuration.update('enabled', true, vscode.ConfigurationTarget.Global);
-    await configuration.update('labelMode', 'idAndClass', vscode.ConfigurationTarget.Global);
   });
 
   beforeEach(async () => {
