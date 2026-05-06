@@ -13,6 +13,10 @@ type HTMLEndTagDecoration = vscode.DecorationOptions & {
   renderOptions: { after: { contentText: string } };
 };
 
+const HTML_DOCUMENT_LANGUAGE_IDS = new Set(['html', 'php', 'twig', 'blade', 'vue-html', 'svelte', 'erb', 'nunjucks']);
+const JSX_DOCUMENT_LANGUAGE_IDS = new Set(['javascript', 'javascriptreact']);
+const TYPESCRIPT_REACT_LANGUAGE_ID = 'typescriptreact';
+
 function getJSXAttributeStringValue(attr?: JSXAttribute): string | undefined {
   if (attr?.value) {
     if (attr.value.type === 'StringLiteral' && typeof attr.value.value === 'string') {
@@ -121,6 +125,10 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
     this.decorationType = this.createTextEditorDecoration();
   }
 
+  private isHTMLDocument(input: vscode.TextDocument) {
+    return HTML_DOCUMENT_LANGUAGE_IDS.has(input.languageId.toLowerCase());
+  }
+
   setActiveEditor(editor: vscode.TextEditor | undefined) {
     if (editor) {
       this.activeEditor = editor;
@@ -140,6 +148,10 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
   }
 
   getHTMLDocumentDecorations(input: vscode.TextDocument) {
+    if (!this.isHTMLDocument(input)) {
+      return [];
+    }
+
     const htmlLanguageService = this.getHTMLLanguageService();
 
     const document = { ...input, uri: input.uri.toString() };
@@ -320,18 +332,20 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 
     const languageId = this.activeEditor.document.languageId.toLowerCase();
 
-    if (['javascript', 'javascriptreact'].includes(languageId)) {
+    if (JSX_DOCUMENT_LANGUAGE_IDS.has(languageId)) {
       this.activeEditor.setDecorations(this.decorationType, this.getJSXDocumentDecorations(this.activeEditor.document));
-    } else if (languageId === 'typescriptreact') {
+    } else if (languageId === TYPESCRIPT_REACT_LANGUAGE_ID) {
       this.activeEditor.setDecorations(
         this.decorationType,
         this.getJSXDocumentDecorations(this.activeEditor.document, { typescript: true })
       );
-    } else {
+    } else if (this.isHTMLDocument(this.activeEditor.document)) {
       this.activeEditor.setDecorations(
         this.decorationType,
         this.getHTMLDocumentDecorations(this.activeEditor.document)
       );
+    } else {
+      this.activeEditor.setDecorations(this.decorationType, []);
     }
   }
 
