@@ -23,6 +23,7 @@
   ],
   "icon": "images/icon.png",
   "activationEvents": [
+    "onCommand:htmlEndTagLabels.toggleEnabled",
     "onLanguage:html",
     "onLanguage:php",
     "onLanguage:twig",
@@ -41,9 +42,21 @@
   },
   "main": "./out/extension.js",
   "contributes": {
+    "commands": [
+      {
+        "command": "htmlEndTagLabels.toggleEnabled",
+        "title": "Toggle Enabled",
+        "category": "HTML End Tag Labels"
+      }
+    ],
     "configuration": {
       "title": "HTML End Tag Labels",
       "properties": {
+        "htmlEndTagLabels.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Enable or disable end tag labels."
+        },
         "htmlEndTagLabels.labelColor": {
           "type": "string",
           "default": "",
@@ -55,6 +68,17 @@
           "type": "string",
           "default": "/",
           "markdownDescription": "Label prefix. Default: `/`."
+        },
+        "htmlEndTagLabels.labelMode": {
+          "type": "string",
+          "default": "idAndClass",
+          "enum": ["idAndClass", "id", "class"],
+          "markdownEnumDescriptions": [
+            "Show both the element id and classes.",
+            "Show only the element id.",
+            "Show only the element classes."
+          ],
+          "markdownDescription": "Choose which attributes are shown in end tag labels."
         }
       }
     },
