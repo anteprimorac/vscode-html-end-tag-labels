@@ -234,7 +234,7 @@ export default Component;
     ]);
   });
 
-  test('Use contributed theme color by default for label color', () => {
+  test('Returns contributed theme color by default for label color', () => {
     const originalGetConfiguration = vscode.workspace.getConfiguration;
 
     try {
@@ -265,7 +265,7 @@ export default Component;
     }
   });
 
-  test('Use deprecated hex setting as label color fallback', () => {
+  test('Returns deprecated hex setting as label color fallback', () => {
     const originalGetConfiguration = vscode.workspace.getConfiguration;
 
     try {
