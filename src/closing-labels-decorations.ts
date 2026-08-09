@@ -56,13 +56,13 @@ export default class ClosingLabelsDecorations implements vscode.Disposable {
 
     this.subscriptions.push(
       vscode.workspace.onDidChangeConfiguration((event) => {
-        if (!event.affectsConfiguration('htmlEndTagLabels')) {
+        if (!event.affectsConfiguration('htmlEndTagLabels') && !event.affectsConfiguration('workbench.colorCustomizations')) {
           return;
         }
 
         this.decorationType = this.createTextEditorDecoration();
 
-        if (this.activeEditor && event.affectsConfiguration('htmlEndTagLabels', this.activeEditor.document)) {
+        if (this.activeEditor) {
           this.triggerUpdate();
         }
       })
